@@ -1,0 +1,373 @@
+Tübitak internship day 1,2
+The department that I do my internship in is System integration and test. They mostly deal with the test stage of RF systems. Some research topics are given to me and I am planning to do it for a few days. The topics are:
+
+
+-RF comp. 
+LO (local oscillator)
+LNA- Low noise amplifier
+Mixer
+Filters
+Splitter
+Power divider
+
+
+
+-LVDS mesaj paketi, LVDS nasıl çalışır
+
+-test cihazları
+Signal generator 
+Spectrum analyzer
+VNA
+
+
+basics
+Length of antenna is proportional with the wavelength. That is why the frequency should be increased when transmitting and when it reaches the receiver it can be decreased again. This is called frequency shift
+Other reasons for operating at high frequencies are:
+-Efficiency in propagation
+-immunity to some forms of noise
+-size of the antenna required (practice is usually 0.25 of the wavelength
+
+NOISE
+White noise: effects all frequencies equally
+Pink noise: does not have a flat response. Its power density falls with increasing frequency. It is similar to flicker noise I believe
+Band limited noise: Noise that can have its frequency band limited either by filters or the circuit through which it passes
+
+Different types of noise (as known from analog IC) are thermal noise, shot noise, flicker noise, avalanch noise phase noise. Phase noise is a form of RF noise that is visible on radio frequency
+
+
+ 
+RF Module
+Small electronic circuit which is used to receive transmit or transceive radio waves.
+
+
+Transmitter
+A transmitter (or radio transmitter) is an electronic device which produces radio waves with the help of an antenna. It generates a radio frequency current applied to the antenna which in turn radiates radio waves.
+Receiver
+A receiver is a device that receives radio waves and converts the information which is carried by them into a usable form
+An antenna intercepts emws and then converts them into alternating current that are applied to the receiver.
+
+Very simple version of receiver and transmitter can be seen from the following figure:
+
+
+Receiver Front End (FE)
+In a radio receiver circuit, the RF front end is a generic term for all the circuitry between the antenna up to and including the mixer stage.
+It consists of all the components in the receiver that process the signal at the original incoming radio frequency (RF), before it is converted to a lower intermediate frequency (IF)
+
+Transceiver
+A transceiver both contains a transmitter and a receiver. It combine a significant amount of the transmitter and receiver handling circuitry
+
+LNA
+
+AI search
+
+Let's dive deep into the theoretical foundation of the Low Noise Amplifier (LNA). Since you will be writing test routines and UI for test devices, understanding the mathematical and physical trade-offs inside an LNA is crucial.
+The LNA is the very first active block in a receiver chain, sitting immediately after the antenna. According to the Friis equation for cascaded systems, the noise figure of the first stage dominates the overall noise performance of the entire receiver. Therefore, the LNA's job is to amplify the microscopic voltages collected by the antenna while adding the absolute minimum amount of its own electronic noise.
+The 4 Pillars of LNA Theory
+Designing an LNA is notoriously challenging because it requires a simultaneous balance of high gain, low noise figure, good input and output matching, and unconditional stability. These parameters are highly interdependent and often conflict with one another.
+1. Noise Figure (NF) vs. Impedance Matching
+This is the most critical trade-off in RF design. The noise figure of a linear two-port amplifier is mathematically defined by four parameters: the minimum achievable noise figure of the transistor ($F_{min}$), the optimum source reflection coefficient ($\Gamma_{opt}$), the device's equivalent noise resistance ($R_n$), and the actual source impedance presented to the amplifier ($Z_S$).
+The Dilemma: The source impedance required to achieve the lowest possible noise ($Z_{opt}$) is almost never the same as the complex conjugate impedance required for maximum power transfer and the best input return loss ($Z_{in}^*$).
+The Solution: You cannot have both a perfect power match and a perfect noise match simultaneously. Designing an LNA requires trading off a perfect input match for a better noise figure. On a Smith Chart, the solutions for specific noise figures form "noise circles," allowing the designer to pick an acceptable compromise.
+2. Stability (Preventing Oscillation)
+An amplifier is essentially an oscillator that hasn't started oscillating yet. You must ensure it remains stable.
+A two-port network is considered unconditionally stable if its input and output reflection coefficients ($\Gamma_{in}$ and $\Gamma_{out}$) are less than 1, and its Linvill stability factor ($K$) is strictly greater than 1.
+If $K < 1$, the device is potentially unstable and can oscillate under certain source and load impedance combinations.
+Engineers use the Smith Chart to plot "stability circles," which represent the exact boundaries between stable and unstable impedance regions. Achieving unconditional stability often requires sacrificing some forward gain by intentionally adding resistive loading to the circuit.
+3. Linearity ($P_{1dB}$ and $IP_3$)
+While an LNA amplifies weak signals, it must also survive strong interfering signals (blockers) without distorting.
+1-dB Compression Point ($P_{1dB}$): The input power level where the amplifier's gain drops by 1 dB from its linear ideal.
+Third-Order Intercept Point ($IP_3$): A theoretical point indicating how well the amplifier handles intermodulation distortion when two close frequencies enter it simultaneously.
+The Trade-off: High linearity (a high $IP_3$) typically requires a higher DC current draw, whereas the absolute minimum noise figure is often achieved at lower current levels.
+4. Forward Gain ($S_{21}$)
+The LNA must provide enough gain to suppress the noise contributions of the subsequent stages (like the Mixer). However, if the LNA provides too much gain, it will amplify the signal so much that it saturates the mixer, ruining the linearity of the entire system.
+MY NOTES - LNA
+
+https://www.youtube.com/watch?v=azgW5qCxwcQ
+
+LNA
+A low noise amplifier is an electronic amplifier that amplifies a very low power signal without significantly degrading its signal-to-noise ratio
+When a transmitter sends a signal, parts of it is going to be absorbed by the environment (it is going to be attenuated) so to detect the signal we will amplify it. Since we will also have a noise, while we are going to increase the signal, the noise also will be increased so we will consider it.
+
+SNR_in = Signal power / Noise power
+In a perfect world when an signal is increased with LNA the noise will be increased with the same ratio. 
+SNR_out = (A_v*Signal power)/(Gain*Noise power) = SNR_in
+
+But in the real world, the amplifier will have its own noise, think of it is as in the PSRR in analog IC for example. IN ee414 the supply current also will be increased at the output and create a noise
+
+So the real SNR_out = (A_v * signal power)/(Av*noise power + amplifier noise) so it will decrease
+
+1. $S_{11}$ : Input Reflection (Return Loss)
+What it means: The signal is injected into Port 1, and the VNA measures what bounces back into Port 1.
+What it tests: Impedance matching. If your LNA has a perfect $50\ \Omega$ input, $S_{11}$ will be a very large negative number (e.g., -20 dB), meaning almost nothing reflected back. If the cable is broken or the chip is badly designed, $S_{11}$ will be close to 0 dB, meaning the signal hit a wall and bounced right back.
+2. $S_{21}$ : Forward Transmission (Gain or Insertion Loss)
+What it means: The signal is injected into Port 1, travels through the Device Under Test (DUT), and the VNA measures what comes out at Port 2.
+What it tests: What the component actually "does" to the signal.
+For an LNA, $S_{21}$ is your Gain (e.g., +15 dB).
+For a Filter or Splitter, $S_{21}$ is your Insertion Loss (e.g., -2 dB).
+3. $S_{12}$ : Reverse Transmission (Isolation)
+What it means: The VNA switches directions. It injects a signal into Port 2 (the output of your LNA) and measures what leaks backwards through the device out of Port 1.
+What it tests: Isolation. Amplifiers are supposed to be one-way streets. A good LNA will heavily block signals trying to go backward, resulting in a very low $S_{12}$ (e.g., -40 dB). If $S_{12}$ gets too high, the amplifier can turn into an oscillator and become unstable.
+4. $S_{22}$ : Output Reflection (Output Return Loss)
+What it means: The signal is injected into Port 2, and the VNA measures what bounces back into Port 2.
+What it tests: Output impedance matching. Just like the input, the output of your LNA needs to be matched to $50\ \Omega$ so it can seamlessly pass the amplified signal to the next stage (like a Mixer) without reflections.
+
+
+An example for LNA is the following
+
+
+-Requirements for lna:
+Low noise coming from deice
+Linearity (better IP3)
+Low power consumption 
+Gain
+Matched to antenna or filter
+
+
+
+
+
+
+
+
+VISA (Virtual Insturment Software Architecture) & PYVISA
+General overview
+The programming of measurement instruments can be real pain. There are many different protocols, sent over many different interfaces and bus systems (e.g. GPIB, RS232, USB, Ethernet). For every programming language you want to use, you have to find libraries that support both your device and its bus system.
+In order to ease this unfortunate situation, the Virtual Instrument Software Architecture (VISA) specification was defined in the middle of the 90ies. VISA is a standard for configuring, programming, and troubleshooting instrumentation systems comprising GPIB, VXI, PXI, Serial, Ethernet, and/or USB interfaces.
+Today VISA is implemented on all significant operating systems. A couple of vendors offer VISA libraries, partly with free download. These libraries work together with arbitrary peripherical devices, although they may be limited to certain interface devices, such as the vendor’s GPIB card.
+The VISA specification has explicit bindings to Visual Basic, C, and G (LabVIEW’s graphical language). Python can be used to call functions from a VISA shared library (.dll, .so, .dylib) allowing to directly leverage the standard implementations. In addition, Python can be used to directly access most bus systems used by instruments which is why one can envision to implement the VISA standard directly in Python (see the PyVISA-Py project for more details). PyVISA is both a Python wrapper for VISA shared libraries but can also serve as a front-end for other VISA implementation such as PyVISA-Py.
+Reference: https://pyvisa.readthedocs.io/en/latest/
+Communicating with yout insturment
+import pyvisa
+rm = pyvisa.ResourceManager()
+rm.list_resources()
+('ASRL1::INSTR', 'ASRL2::INSTR', 'GPIB0::14::INSTR')
+my_instrument = rm.open_resource('GPIB0::14::INSTR')
+print(my_instrument.query('*IDN?'))
+print(my_instrument)
+<GPIBInstrument('GPIB::14')>
+
+
+
+There many Resource subclasses representing the different types of resources, but you do not have to worry as the ResourceManager will provide you with the appropriate class. You can check the methods and attributes of each class in the Resource classes
+Then, you query the device with the following message: '\*IDN?'. Which is the standard GPIB message for “what are you?” or – in some cases – “what’s on your display at the moment?”. query is a short form for a write operation to send a message, followed by a read.
+my_instrument.query("*IDN?")
+
+Is the same exact thing as 
+
+my_instrument.write('*IDN?')
+print(my_instrument.read())
+
+You can access all the opened resources by calling rm.list_opened_resources(). This will return a list of Resource, however note that this list is not dynamically updated
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Project Report: Software-Defined Mock VNA & SCPI Controller
+1. Executive Summary
+The objective of this phase was to develop a fully functional, closed-loop Vector Network Analyzer (VNA) simulation environment. By building a local TCP/IP server that mimics the behavior of a physical hardware instrument, we successfully created a testing ground for a Python-based PyVISA controller. The system correctly establishes a socket connection, parses standard SCPI (Standard Commands for Programmable Instruments) strings, generates mathematically accurate mock S-parameter data, and plots the resulting RF traces.
+2. System Architecture: The Mock Server
+To simulate the physical instrument, a pure-Python TCP server (mock_VNA.py) was deployed on the local loopback address (127.0.0.1) at port 5025, mirroring the industry-standard LXI/Socket protocol used by modern VNAs.
+Key Features Implemented:
+SCPI Command Parser: The server strips hidden characters (\r, \n) and processes commands like *IDN? (Identification) and :SENS:FREQ:START (Configuration).
+Dynamic Data Generation: Rather than static strings, the server calculates custom arrays based on the requested sweep points, simulating a declining magnitude (dB) and an increasing phase (Degrees).
+Robust Exception Handling: The server utilizes try/except ConnectionResetError blocks to survive violent disconnects from the client, allowing it to run continuously without crashing.
+Final Server Implementation (mock_VNA.py):
+Python
+import socket
+
+start_freq_mhz = 100.0
+stop_freq_mhz = 3000.0
+points = 201
+
+def process_scpi_command(command):
+    global start_freq_mhz, stop_freq_mhz, points
+    cmd = command.strip().upper()
+
+    if cmd == "*IDN?":
+        return "munirvna, mun2004, series21, M.1.0\n"
+        
+    elif cmd.startswith(":SENS:FREQ:START"):
+        start_freq_mhz = float(cmd.split())
+        return None
+        
+    elif cmd.startswith(":SENS:SWE:POIN"):
+        points = int(cmd.split().strip())
+        return None
+        
+    elif cmd == ":CALC:DATA? SDATA":
+        trace_data = []
+        for i in range(points):
+            mock_db = -5 - (i % 16) * 4
+            mock_phase = (i * 4) - 90.0
+            if mock_phase > 180.0: 
+                mock_phase -= 360.0
+            trace_data.append(f"{mock_db:.3f},{mock_phase:.3f}")
+        return ",".join(trace_data) + "\n"
+        
+    return None
+
+def run_mock_vna():
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(('127.0.0.1', 5025))
+    server.listen(1)
+    print("Mock VNA is running and listening on port 5025...")
+
+    while True:
+        conn, addr = server.accept()
+        print(f"\n[+] PyVISA connected from {addr}")
+        
+        while True:
+            try:
+                data = conn.recv(1024).decode('utf-8')
+                if not data:
+                    break
+                print(f"Received: {data.strip()}")
+                
+                response = process_scpi_command(data)
+                if response:
+                    conn.sendall(response.encode('utf-8'))
+                    
+            except ConnectionResetError:
+                break
+                
+        print("[-] PyVISA Disconnected")
+        conn.close()
+
+if __name__ == "__main__":
+    run_mock_vna()
+
+3. The PyVISA Controller
+The client-side script (conf.py) acts as the automation controller. It connects to the Mock VNA using the PyVISA library forced into a pure-Python backend (@py) to bypass heavy proprietary drivers.
+Critical Debugging Milestones:
+Termination Characters: Initially, the system crashed with a VI_ERROR_CONN_LOST timeout because the VNA object lacked termination parameters. Setting vna.read_termination = '\n' and vna.write_termination = '\n' resolved the desync.
+Data Parsing: Extracted the raw comma-separated string into a clean Python list, utilizing list comprehension and modulo logic to separate the interleaved Magnitude (even indices) and Phase (odd indices) data.
+Final Controller & Plotting Implementation (conf.py):
+Python
+import pyvisa
+import time
+import matplotlib.pyplot as plt
+
+CMD_START_FREQ = ":SENS:FREQ:START"
+CMD_POINTS = ":SENS:SWE:POIN"
+CMD_READ_DATA = ":CALC:DATA? SDATA"
+
+def run_tests():
+    rm = pyvisa.ResourceManager('@py')
+    vna = rm.open_resource("TCPIP0::127.0.0.1::5025::SOCKET")
+    
+    # Critical: Tell PyVISA when a message is finished
+    vna.read_termination = '\n'
+    vna.write_termination = '\n'
+    
+    print("--- Connecting to VNA ---")
+    idn = vna.query("*IDN?")
+    print(f"Hardware Detected: {idn}")
+    
+    print("\n--- Configuring VNA ---")
+    print("Setting Start Freq to 500 MHz...")
+    vna.write(f"{CMD_START_FREQ} 500")
+    time.sleep(0.5)
+    
+    print("Setting Sweep Points to 5...")
+    vna.write(f"{CMD_POINTS} 5")
+    time.sleep(0.5)
+    
+    print("\n--- Fetching Trace Data ---")
+    raw_data = vna.query(f"{CMD_READ_DATA}")
+    
+    vna.close()
+    
+    # --- Visualization ---
+    data_list = raw_data.split(',')
+    mags = [float(x) for i, x in enumerate(data_list) if i % 2 == 0]
+    phases = [float(x) for i, x in enumerate(data_list) if i % 2 != 0]
+    
+    fig, ax1 = plt.subplots()
+    
+    ax1.plot(mags, 'b-', label='Magnitude (dB)')
+    ax1.set_xlabel('Point Index')
+    ax1.set_ylabel('Magnitude (dB)', color='b')
+    
+    ax2 = ax1.twinx()
+    ax2.plot(phases, 'r--', label='Phase (deg)')
+    ax2.set_ylabel('Phase (deg)', color='r')
+    
+    plt.title("Mock VNA Trace")
+    plt.show()
+
+if __name__ == "__main__":
+    run_tests()
+
+4. Phase 2 Readiness: Transition to Physical Hardware
+The system is now stable and ready to be ported to a physical VNA. The required modifications have been mapped out to ensure a safe and successful transition:
+Network Reconfiguration: Update the IP address in rm.open_resource() from the loopback address to the VNA's physical physical IPv4 address.
+Output Power Limiting: Implement the :SOUR:POW command to clamp the VNA's RF output power (e.g., -20 dBm) prior to enabling the sweep, protecting sensitive active components like LNAs.
+ASCII Formatting: Inject the FORM:DATA ASCii command before the data query to ensure the physical hardware responds with plain text rather than unreadable binary blocks.
+Hardware Biasing: Ensure the physical setup includes both the RF coaxial connections (Port 1 / Port 2) and the necessary DC power supply to properly bias the active circuit.
+
+
+
+
+
+
+1. Implementation of Discrete Sweep Synchronization
+Initial iterations of the automation script relied on the VNA’s default continuous sweep mode, which caused asynchronous timing collisions when the Python interface attempted to fetch trace data while the hardware was actively updating its registers. To achieve deterministic data acquisition, the system architecture was transitioned to a discrete, single-sweep trigger model.
+The sequence was updated to explicitly disable continuous sweeping (INIT:CONT OFF), force an immediate internal trigger (TRIG:SOUR IMM), and arm a single sweep (INIT1:IMM). Crucially, synchronization between the physical hardware and the Python script was established using the SCPI Operation Complete query (*OPC?). By chaining the trigger and the query (INIT1:IMM; *OPC?), the software execution thread is intentionally blocked until the VNA hardware completes its physical sweep cycle, ensuring data integrity before the script attempts to read the SDATA buffer.
+2. Development of the Continuous Tracking Metronome
+To provide real-time monitoring capabilities without sacrificing the stability of the discrete sweep model, a background timing mechanism was integrated using the PyQt5 QTimer class.
+This "metronome" triggers the discrete sweep function at a strictly controlled interval (3000 milliseconds). This interval was empirically selected to exceed the maximum physical sweep time of the VNA, effectively eliminating race conditions. The user interface was updated with a toggle state, allowing the operator to dynamically start and stop the continuous acquisition loop. When paused, the software issues an INIT1:CONT ON command to return the physical VNA screen to its native, free-running state for manual inspection.
+3. Hardware-Level System Calibration (Trans Norm Both)
+A significant requirement for the measurement setup was the elimination of cable insertion loss and phase delay to establish a normalized 0 dB reference plane. Instead of relying on manual trace math, the script was upgraded to remotely command the Rohde & Schwarz internal calibration engine.
+A dedicated normalization routine was programmed to execute the "Trans Norm Both" (Forward and Reverse Transmission) calibration standard. The SCPI command sequence was engineered as follows:
+Definition: The calibration method was defined programmatically (SENS1:CORR:COLL:METH:DEF) using the FRTRans standard across Ports 1 and 2.
+Acquisition: The system triggers a physical measurement of the 'Through' standard (SENS1:CORR:COLL:ACQ:SEL THRough, 1, 2), utilizing the *OPC? query to wait for the physical calibration sweep to conclude.
+Application: The error-correction arrays are computed and saved to the VNA’s active measurement state (SENS1:CORR:COLL:SAVE:SEL), immediately normalizing the live data.
+To prevent command collisions, an anti-collision shield was implemented. If the continuous tracking timer is active when the user initiates calibration, the software automatically pauses the QTimer, executes the calibration routine, and seamlessly resumes the tracking metronome.
+4. Resolution of Buffer Desynchronization and Hardware State Errors
+During stress testing, the system exhibited intermittent -401: Query Interrupted errors and parsing failures resulting in blank graphical plots. These anomalies were traced to hardware buffer desynchronization.
+When SCPI queries ending in *OPC? were executed using PyVISA’s .write() method instead of .query(), the resulting ASCII '1' was left unread in the VNA’s output buffer. Subsequent data requests (:CALC:DATA? SDATA) collided with this stale data.
+To permanently resolve this, a "Universal Memory Wipe" protocol was introduced at the beginning of every sweep cycle. By utilizing the low-level PyVISA clear() command alongside the SCPI *CLS (Clear Status) command, the software violently flushes both the PC-side network buffers and the VNA’s internal error queues. Furthermore, artificial software delays (time.sleep) were removed, relying entirely on the hardware's native command queuing system. Finally, a minor mathematical offset (1e-12) was added to the magnitude calculation array to prevent log10(0) division errors in the event of an ideal zero-magnitude reading.
+5. Data Management and UI Refinement
+The graphical user interface layout was fundamentally restructured using strict PyQt QVBoxLayout and QHBoxLayout nesting to ensure proper widget scaling and parent-child assignment.
+For data portability, a native Windows export function was integrated using the csv library and QFileDialog. To facilitate this, the scope of the acquired data arrays (Magnitude, Phase, and Frequency) was elevated to instance variables (self.mags_db, self.phases_deg, self.freqs_hz). This memory management ensures that the data arrays persist in the computer's RAM after the measurement cycle concludes, allowing the operator to accurately export the physical data points of the last captured sweep to a standard .csv file for post-processing.
+
+
+
