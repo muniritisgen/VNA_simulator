@@ -1,0 +1,136 @@
+Report Writing Guidelines
+ 
+
+It is mandatory that the Summer Practice (SP) report be written according to the following writing guidelines.  Notice that every year many reports are rejected and rewritten due to some common mistakes regarding format and style. This guideline will walk you through the correct format and style via explanations and examples. Please read carefully and before you attempt to write your report!
+
+If you shared some work with some other SP students at your location, please specify the details. Who was the student (name, school, year, etc.), who did what part of the work and what is your contribution in the work that that person claims and vice versa. Remember: Write your own report and the other student will write her/his own report. You CAN NOT share the report, you CAN NOT have a common part in the report. You must document the work with your own words and diagrams and style. COPYING IS ABSOLUTELY REJECTED IN ALL ITS FORMS.
+
+In the report, the main goal is to describe/report the professional dimensions of the company and what you professionally did there as a student. The SP report is not a personal diary or any social story telling environment. The emphasis is on the technical/professional aspects and other matters should not be included unless there is a relation to the technical part.
+
+Keep in mind that the reports are not evaluated according to the number of pages, so do not include any irrelevant information to make it longer. Try to keep your report as short as possible while emphasizing the key points listed below.
+
+Just before we begin, an important reminder: When you are done writing the SP report, make sure that you get it approved by the engineer/manager/supervisor who led you in your SP. For that, signature/seal is required. Make sure you put the name/contact phone number of that person in the cover page and additional information sheet in the SP.
+
+ 
+
+1. Title Page
+The title page should include the information about the course code, student identification information (number, name, surname), company name, division/branch name in the company (if exits), begining - end dates of your summer practice, name-surname of engineer you have worked with and the contact information of the engineer (email and phone).
+
+ 
+
+2. Table of Contents
+Here you must list the chapters and sections the report involves.
+
+ 
+
+3. Description of the Company
+(Note: This part can be skipped if you have done your SP within the scope of the STAR program.)
+
+Summarize the work type, administrative structure, number of employees (how many engineers, under which division, etc.), etc.
+
+How many people in the company, how many engineers, how many technicians, administrators, what is the administrative structure (tree)?How about your division and group, how many engineers/technicians and what is their field (EE, ME, etc.)
+
+If there is an administrative and management team tree picture include it or make one if you can. Remember a picture is worth thousand stories!
+
+What does the company do (manufacturing, design, R&D, application, test, maintenance, repaier, what?)  What is the end product and who is the customer?
+
+What is the company share in the market in the local area, city, nation, in the world? Who does it serve to?
+
+Where is the company located? Is it close to a related industry/university etc.?
+
+You can include information such as above in as brief and easy to understand form as possible. Do not include too many minute details. Give the general picture but don’t include the name of the technician and workers unless they are the significant part of the work there.
+
+Example: Arcelik manufactures house appliances, fridges etc. Customer is turkey and world, sales are 3% domestic market, and the rest is exported. The company share of the world house appliance market is 30% and mainly europe.
+
+2000 employees, of which 250 are engineers and 1000 are technicians.  50 of the engineers are EE with 10 of them PhDs, 20 Ms.
+
+ 
+
+4. A Brief History of the Company
+(Note: This part can be skipped if you have done your SP within the scope of the STAR program.)
+
+Where the company started, how it developed to what it is presently, what played role in its success and how it has affected the industry/society etc. can be explained in this chapter. Be brief and to the point. Point out the significant events (milestones) and exclude the details.
+
+ 
+
+
+5. Introduction
+You should mention in this chapter the purpose of your SP, why and how you chose your SP location, what type of work you did while you were there.  Explain what kind of work was done there. Summarize what you will be detailing in the main body of the text.
+
+ 
+
+6. The Main Body of the Report
+Here, one common mistake that students make is to write the title of this chapter as “main body of the text,” but the right approach here is to find an appropriate title for this part. “Work Conducted at the SP Location” is an appropriate title for this chapter.
+
+This is the place where you will describe what you did and what you observed during SP. It is very important that you write what you did and observed that truely belongs to the company in the sense that it can not be obtained from main textbooks, datasheets, etc.
+
+If the work is based on some theoretical concept which you did not know before, then it is appropriate to learn it. But it is not right to write the very detail of what you learned from the book (the theory) in the report. Especially DO NOT COPY a chapter, a section or any part from any book or from the internet resources! Whatever book or document you learned the concept from, please refer to that document and put the source in the list of references! In your report, if you wish you can explain the basics of the concept in your own words and in a short form and refer to where you learned the information from in the references section.
+
+When you write references, use the following notation.
+
+Example: “Permanent magnet AC servomotors are widely utilized in modern automation systems, CNC machines, robots, and others. The motors involved are typically three phase motors with three phase AC windings in the stator and permanent magnet placed on the surface of the rotor.  The PMAC machine generates torque according to the T=k*Iq formula where K is the torque coefficient and Iq is the current magnitude [1].  In the PMAC motor manufacturing plant there were various manufacturing lines for various motor types and sizes. In each line first the 1% annealed silicium steel laminations were cut and shaped as stator and rotor laminations...”
+
+ Here with [1] we refer to the book that we learned the PM AC machine principle of operation. So when the report is finished, in the references section we must refer to the book...  See how that is done in that section...
+
+ Summer Practice involves practical engineering work of some kind (could be manufacturing, assembly, test, design, research, application, maintenance, repair, etc.)
+
+Your goal is to be involved in a part of such engineering activities and report your activity. You can be an active part by doing the job, or you can sometimes be the passive part and observe what type of engineering work is being done at the SP location. When you do the job, explain what and how you did it. When you observe, explain what you observed. That could be a manufacturing process and you could explain the stages involved in manufacturing a component or some equipment. It could be a test facility and you could explain how you did the test or how the test was done while you were observing (if you observed).  Here, you must give as much detail as possible. Include related photos/figures/graphs to make it easy to understand the process and procedure.
+
+Text and figures must be close to each other as much as possible. 
+
+DO NOT PLACE FIGURES AT THE END OF THE REPORT!
+
+DO NOT USE TERMS SUCH AS “see the figure below” or “see the figure above”. Give a number to each figure and graph, then in the text use the figure number to refer to the figure.
+
+Example:  “ As Fig. 2 indicates, the designed board has 7 input terminals and three output terminals with one of them being the shielded ground wire.”
+
+ 
+
+7. Conclusions
+Here summarize the report. What have you achieved during the SP? What is your observation about the company culture, technology, quality, apprach to engineering? What was the contribution of the summer practice to you and to the company? How did you benefit from the SP and how did the company benefit from the SP? Was it useful and in what ways?  Do you recommend this location to another student? In what areas is this company strong and can be considered a good SP location?
+
+If this is your second SP, briefly write where you did your SP1 and how your SP2 relates to your SP1. Did they complement each other? Which one do you think was better and would you prefer to do SP2 before SP1?
+
+ 
+
+8. References
+You must cite any scientific articles, papers, data sheets etc. that you have used in your SP report. Please note the following important rules:
+
+- It is not sufficient to provide only a reference list at the end of your report. Make sure to also indicate in the main body of your report how you used the material in each cited study. Examples:  "The unknown model parameters have been estimated using the algorithm in [7].", "The proposed object detection method has been evaluated on the Pascal VOC image data set [22]."
+
+- If you use any figures, illustrations, drawings, photos in your SP report which are not your own creation, always mention it in the caption of your figure and cite the related resource. Example: "Figure 4: Schematic illustration of an antenna array. The image is from [13]." 
+
+ 
+
+You may find it useful to check the IEEE Reference Guide and follow this format when citing resources. Here are some examples from the IEEE Reference Guide on citing different types of resources:
+
+Conference papers: 
+
+[1] D. Caratelli, M. C. Viganó, G. Toso, and P. Angeletti, “Analytical placement technique for sparse arrays,” presented at the 32nd ESA Antenna Workshop, Noordwijk, The Netherlands, Oct. 5–8, 2010.
+
+Books: 
+
+[2] B. Klaus and P. Horn, Robot Vision. Cambridge, MA, USA: MIT Press, 1986.
+
+Journal articles: 
+
+[3] M. Ito et al., “Application of amorphous oxide TFT to electrophoretic display,” J. Non-Cryst. Solids, vol. 354, no. 19, pp. 2777–2782, Feb. 2008.
+
+Online resources: 
+
+[4] L. Breimann. Manual on Setting Up, Using, and Understanding Random Forests v4.0. (2003). Accessed: Apr. 16, 2014. [Online]. Available: http://oz.berkeley.edu/users/breiman/Using_random_forests_v4.0.pdf
+
+ 
+
+9. Appendices
+Here place some items which are supplementary to the report, could be schematics, codes, and other things...
+
+If the document is a datasheet and it can be easily accessed from the internet, then you can refer to it with the appropriate internet link and document number.  In this manner you dont have to print it and waste tons of paper...
+
+ Example:
+
+ Appendices
+
+ Appendix A  The 10kW motor stator lamination design
+
+ Appendix B  HDTV SMPS converter schematics
